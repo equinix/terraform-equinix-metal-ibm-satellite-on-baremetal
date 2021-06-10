@@ -1,0 +1,22 @@
+metal_create_project      = false
+metal_project_id          = // (string)
+metal_api_auth_token      = // (string)
+eqx_metal_device_metro    = // (string) EQUINIX METAL LOCATION. I.e.: "da11"
+control_plane_plan        = // (string) EQUINIX METAL SERVER SIZE. I.e.: "c3.small.x86"
+data_plane_plan           = // (string) EQUINIX METAL SERVER SIZE. I.e.: "c3.small.x86"
+stack_name                = // (string) EQUINIX METAL SERVER NAME PREFIX I.e.: "ibm-satellite-equinix-metal"
+rhel_submanager_username  = // (string) RHEL ACCOUNT USERNAME/EMAIL
+rhel_submanager_password  = // (string) RHEL ACCOUNT PASSWORD
+
+//ibm
+ibm_create_location       = true
+ibm_create_resource_group = false
+ibm_resource_group_name   = "Default"
+ibm_sat_location_name     = // (string) I.e.: "MY_NEW_Location_Dallas"
+ibm_sat_managed_from      = // (string) IBM CLOUD METRO. To list available multizone regions, run 'ibmcloud ks locations' I.e.: "wdc04"
+ibm_cp_host_labels        = // (string) KEY-VALUE PAIRS TO LABEL CONTROL PLANE HOSTS I.e.: ["owner:me", "provider:equinix"]
+ibm_dp_host_labels        = // (string) KEY-VALUE PAIRS TO LABEL WORKER HOSTS I.e.: ["owner:me", "provider:equinix", "type:worker"]
+ibm_cloud_api_key         = // (string) THE IBM CLOUD PLATFORM API KEY
+ibm_region                = // (string) SUPPORTED REGIONS FOR SATELLITE ARE "us-east" and "eu-gb" region
+ibm_dp_host_count         = 0 // YOU MIGHT NEED MORE WORKER NODES
+ibm_cp_host_count         = 3 // YOU MIGHT NEED MORE MANAGER NODES
