@@ -5,7 +5,9 @@ resource "ibm_resource_group" "group" {
 
 data "ibm_resource_group" "group" {
   name = var.ibm_resource_group_name
-  depends_on = [ ibm_resource_group.group ]
+  depends_on = [
+    ibm_resource_group.group
+  ]
 }
 
 resource "ibm_satellite_location" "location" {
@@ -24,12 +26,15 @@ resource "ibm_satellite_location" "location" {
 
 data "ibm_satellite_location" "location" {
   location    = var.ibm_sat_location_name
-  depends_on  = [ ibm_satellite_location.location ]
+  depends_on  = [
+    ibm_satellite_location.location
+  ]
 }
 
+// Control plane resources
 resource "local_file" "script_cp_dir" {
-    content     = "auto-generated folder"
-    filename = "${path.module}/.generated_ibm_satellite_script/cp/auto"
+  content   = "auto-generated folder"
+  filename  = "${path.module}/.generated_ibm_satellite_script/cp/auto"
 }
 
 data "ibm_satellite_attach_host_script" "script_cp" {
@@ -42,8 +47,9 @@ data "ibm_satellite_attach_host_script" "script_cp" {
 resource "ibm_satellite_host" "assign_host_cp" {
   count = var.ibm_cp_host_count
 
-  depends_on = [ null_resource.deploy_satellite_cluster_cp ]
-
+  depends_on = [
+    null_resource.deploy_satellite_cluster_cp
+  ]
   location      = data.ibm_satellite_location.location.id
   cluster       = data.ibm_satellite_location.location.id
   host_id       = metal_device.control_plane.*.hostname[count.index]
@@ -51,9 +57,10 @@ resource "ibm_satellite_host" "assign_host_cp" {
   host_provider = local.ibm_satellite_host_provider
 }
 
+// Data plane resources
 resource "local_file" "script_dp_dir" {
-    content     = "auto-generated folder"
-    filename = "${path.module}/.generated_ibm_satellite_script/dp/auto"
+  content  = "auto-generated folder"
+  filename = "${path.module}/.generated_ibm_satellite_script/dp/auto"
 }
 
 data "ibm_satellite_attach_host_script" "script_dp" {

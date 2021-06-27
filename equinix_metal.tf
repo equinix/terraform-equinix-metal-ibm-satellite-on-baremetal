@@ -36,12 +36,12 @@ resource "metal_device" "control_plane" {
   ]
   hostname                = format("%s-cp-%02d", local.stack_name, count.index + 1)
   plan                    = var.control_plane_plan
-  metro                   = var.eqx_metal_device_metro
+  metro                   = var.metal_device_metro
   operating_system        = var.operating_system
   billing_cycle           = var.billing_cycle
   project_id              = local.metal_project_id
   user_data               = data.template_file.user_data.rendered
-  hardware_reservation_id = lookup(var.reservations, format("%s-cp-%02d", local.stack_name, count.index + 1), "")
+  hardware_reservation_id = lookup(var.metal_device_reservations, format("%s-cp-%02d", local.stack_name, count.index + 1), "")
   tags                    = concat(["app:ibm-satellite"], var.ibm_cp_host_labels)
 }
 
@@ -53,12 +53,12 @@ resource "metal_device" "data_plane" {
   ]
   hostname                = format("%s-worker-%02d", local.stack_name, count.index + 1)
   plan                    = var.data_plane_plan
-  metro                   = var.eqx_metal_device_metro
+  metro                   = var.metal_device_metro
   operating_system        = var.operating_system
   billing_cycle           = var.billing_cycle
   project_id              = local.metal_project_id
   user_data               = data.template_file.user_data.rendered
-  hardware_reservation_id = lookup(var.reservations, format("%s-cp-%02d", local.stack_name, count.index + 1), "")
+  hardware_reservation_id = lookup(var.metal_device_reservations, format("%s-cp-%02d", local.stack_name, count.index + 1), "")
   tags                    = concat(["app:ibm-satellite"], var.ibm_dp_host_labels)
 }
 
@@ -128,8 +128,6 @@ resource "null_resource" "deploy_satellite_cluster_cp" {
 
 resource "null_resource" "deploy_satellite_cluster_worker" {
   count = var.ibm_dp_host_count
-
-  depends_on = [ ibm_satellite_host.assign_host_cp ]
 
   connection {
     type        = "ssh"

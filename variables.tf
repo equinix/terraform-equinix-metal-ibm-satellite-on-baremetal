@@ -26,9 +26,25 @@ variable metal_organization_id {
   description = "Equinix Metal Organization ID"
 }
 
-variable eqx_metal_device_metro {
+variable "metal_device_reservations" {
+  description = <<-EOF
+  A map of hostnames to reservation ids. Any hostname not defined will use the default behavior of not using a reservation.
+  Mapped values may be UUIDs of the hardware reservations where you want these devices deployed,
+  'next-available' if you want to pick your next available reservation automatically, or an empty string.
+  Warning: Please be careful when using hardware reservation UUID and next-available together for the same pool of reservations.
+  It might happen that the reservation which Equinix Metal API will pick as next-available is the reservation which you
+  refer with UUID in another metal_device resource. If that happens, and the metal_device with the UUID is created later,
+  resource creation will fail because the reservation is already in use (by the resource created with next-available).
+  Examples:
+  - {"metal-ibm-sat-cp-01": "next-available"}
+  - {"metal-ibm-sat-cp-01": "f3bf4e58-99e7-47ef-a0eb-8cbf727bc76f", "metal-ibm-sat-cp-02": "b3f6b4eb-64b9-4cf1-9e39-f11a8ba9da20"}
+  EOF
+  type        = map(any)
+  default     = {}
+}
+variable metal_device_metro {
   description = "Equinix Metal metro location to deploy into"
-  default     = "ny"
+  default     = "da"
 }
 
 variable control_plane_plan {
@@ -92,7 +108,7 @@ variable ibm_cp_host_count {
 
 variable ibm_dp_host_count {
   type        = number
-  default     = 0
+  default     = 3
   description = "The total number of baremetal host to create for data plane"
 }
 
@@ -142,22 +158,5 @@ variable ibm_location_bucket {
 
 variable ibm_region {
   description = "Region of the IBM Cloud account. Currently supported regions for satellite are us-east and eu-gb region."
-  default     = ""
-}
-
-variable "reservations" {
-  description = <<-EOF
-  A map of hostnames to reservation ids. Any hostname not defined will use the default behavior of not using a reservation.
-  Mapped values may be UUIDs of the hardware reservations where you want these devices deployed,
-  'next-available' if you want to pick your next available reservation automatically, or an empty string.
-  Warning: Please be careful when using hardware reservation UUID and next-available together for the same pool of reservations.
-  It might happen that the reservation which Equinix Metal API will pick as next-available is the reservation which you
-  refer with UUID in another metal_device resource. If that happens, and the metal_device with the UUID is created later,
-  resource creation will fail because the reservation is already in use (by the resource created with next-available).
-  Examples:
-  - {"metal-ibm-sat-cp-01": "next-available"}
-  - {"metal-ibm-sat-cp-01": "f3bf4e58-99e7-47ef-a0eb-8cbf727bc76f", "metal-ibm-sat-cp-02": "b3f6b4eb-64b9-4cf1-9e39-f11a8ba9da20"}
-  EOF
-  type        = map(any)
-  default     = {}
+  default     = "us-east"
 }
