@@ -9,7 +9,7 @@ terraform {
     }
     ibm = {
       source = "IBM-Cloud/ibm"
-      version = "1.23.2"
+      version = "1.27.0"
     }
     random = {
       source = "hashicorp/random"
