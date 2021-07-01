@@ -157,6 +157,6 @@ variable ibm_location_bucket {
 }
 
 variable ibm_region {
-  description = "Region of the IBM Cloud account. Currently supported regions for satellite are us-east and eu-gb region."
+  description = "Region of the IBM Cloud account. Currently supported regions for satellite are us-east, eu-gb, eu-de."
   default     = "us-east"
 }
