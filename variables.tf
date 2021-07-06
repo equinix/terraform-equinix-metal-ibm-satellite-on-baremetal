@@ -118,6 +118,7 @@ variable ibm_resource_group_name {
 
 variable ibm_sat_location_name {
   description = "The name of the location to be created or pass existing location name"
+  default = "equinix-metal"
 }
 
 variable ibm_sat_location_zones {
