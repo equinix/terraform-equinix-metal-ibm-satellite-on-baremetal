@@ -44,7 +44,7 @@ variable "metal_device_reservations" {
 }
 variable metal_device_metro {
   description = "Equinix Metal metro location to deploy into"
-  default     = "da"
+  default     = "dc"
 }
 
 variable control_plane_plan {
