@@ -126,7 +126,8 @@ variable ibm_sat_location_zones {
 }
 
 variable ibm_sat_managed_from {
-  description = "To list available multizone regions, run 'ibmcloud ks locations'. such as 'wdc04', 'wdc06' or 'lon04'"
+  description = "To list available multizone regions, run 'ibmcloud ks locations'. such as 'wdc', 'lon' or 'fra'."
+  default = "wdc"
 }
 
 variable ibm_cp_host_labels {
