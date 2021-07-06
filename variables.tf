@@ -113,6 +113,7 @@ variable ibm_dp_host_count {
 }
 
 variable ibm_resource_group_name {
+  default     = "default"
   description = "The name of the IBM resource group project. If 'ibm_create_resource_group' is true it will be created"
 }
 
