@@ -22,7 +22,7 @@ function rhel_pre_reqs {
       ((++iterations))
       sleep $wait_seconds
       echo "subscription-manager register and auto attach. Try $iterations ..."
-      subscription-manager register --username $RHEL_USER --password $RHEL_PWD --auto-attach --force
+      subscription-manager register --username=$RHEL_USER --password=$RHEL_PWD --auto-attach --force
       if [ $? -eq 0 ]; then
         echo "Yay - you're subscribed!"
         break
@@ -34,32 +34,30 @@ function rhel_pre_reqs {
       fi
     done
 
+    echo "Refresh local certificates on the client system"
+    subscription-manager refresh
+
     echo "Clean yum repo"
     rm -fr /var/cache/yum/*
     yum clean all
 
     echo "Enable required subscription manager repos"
-    subscription-manager repos --enable="rhel-ha-for-rhel-7-server-eus-rpms" \
-        --enable="rhel-server-rhscl-7-rpms" \
+    subscription-manager repos --enable="rhel-server-rhscl-7-rpms" \
         --enable="rhel-7-server-optional-rpms" \
-        --enable="rhel-7-server-eus-optional-rpms" \
         --enable="rhel-7-server-rh-common-rpms" \
-        --enable="rhel-7-server-eus-rpms" \
         --enable="rhel-ha-for-rhel-7-server-rpms" \
-        --enable="rhel-rs-for-rhel-7-server-eus-rpms" \
         --enable="rhel-rs-for-rhel-7-server-rpms" \
         --enable="rhel-7-server-rpms" \
         --enable="rhel-7-server-supplementary-rpms" \
-        --enable="rhel-7-server-extras-rpms" \
-        --enable="rhel-7-server-eus-supplementary-rpms"
+        --enable="rhel-7-server-extras-rpms"
     echo "Install deltarpm"
     yum install -y deltarpm
     echo "Update packages"
     yum update -y
     echo "Update and upgrade packages"
     yum upgrade -y
-    echo "Install bind-utils"
-    yum install -y bind-utils
+    echo "Install utils"
+    yum install -y yum-utils bind-utils
     echo "Installation has been successfully completed"
 }
 

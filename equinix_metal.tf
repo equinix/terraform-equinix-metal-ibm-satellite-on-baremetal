@@ -62,24 +62,6 @@ resource "metal_device" "data_plane" {
   tags                    = concat(["app:ibm-satellite"], var.ibm_dp_host_labels)
 }
 
-resource "null_resource" "write_ssh_private_key" {
-
-  connection {
-    type        = "ssh"
-    user        = "root"
-    private_key = chomp(tls_private_key.ssh_key_pair.private_key_pem)
-    host        = metal_device.control_plane.0.access_public_ipv4
-  }
-
-  provisioner "file" {
-    content     = chomp(tls_private_key.ssh_key_pair.private_key_pem)
-    destination = "/root/.ssh/id_rsa"
-  }
-  provisioner "remote-exec" {
-    inline = ["chmod 0400 /root/.ssh/id_rsa"]
-  }
-}
-
 data "template_file" "pre_reqs_cluster" {
   template = file("${path.module}/templates/pre_reqs_cluster.sh")
   vars = {
