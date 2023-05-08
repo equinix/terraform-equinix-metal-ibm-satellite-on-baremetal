@@ -3,9 +3,9 @@ terraform {
     null = {
       source = "hashicorp/null"
     }
-    metal = {
-      source = "equinix/metal"
-      version = "2.1.0" 
+    equinix = {
+      source = "equinix/equinix"
+      version = "~> 1.14"
     }
     ibm = {
       source = "IBM-Cloud/ibm"
@@ -24,5 +24,7 @@ terraform {
       source = "hashicorp/local"
     }
   }
-  required_version = ">= 0.14"
+  provider_meta "equinix" {
+    module_name = "equinix-metal-ibm-satellite-on-baremetal"
+  }
 }

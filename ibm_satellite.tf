@@ -52,7 +52,7 @@ resource "ibm_satellite_host" "assign_host_cp" {
   ]
   location      = data.ibm_satellite_location.location.id
   cluster       = data.ibm_satellite_location.location.id
-  host_id       = metal_device.control_plane.*.hostname[count.index]
+  host_id       = equinix_metal_device.control_plane.*.hostname[count.index]
   zone          = element(var.ibm_sat_location_zones, count.index)
   host_provider = local.ibm_satellite_host_provider
 }

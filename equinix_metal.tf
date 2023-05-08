@@ -3,7 +3,7 @@ resource "tls_private_key" "ssh_key_pair" {
   rsa_bits  = 4096
 }
 
-resource "metal_ssh_key" "ssh_pub_key" {
+resource "equinix_metal_ssh_key" "ssh_pub_key" {
   name       = local.stack_name
   public_key = chomp(tls_private_key.ssh_key_pair.public_key_openssh)
 }
@@ -21,44 +21,44 @@ data "template_file" "user_data" {
   }
 }
 
-resource "metal_project" "new_project" {
-  count           = var.metal_create_project ? 1 : 0
+resource "equinix_metal_project" "new_project" {
+  count           = var.equinix_create_project ? 1 : 0
 
-  name            = var.metal_project_name
-  organization_id = var.metal_organization_id
+  name            = var.equinix_project_name
+  organization_id = var.equinix_organization_id
 }
 
-resource "metal_device" "control_plane" {
+resource "equinix_metal_device" "control_plane" {
   count = var.ibm_cp_host_count
 
   depends_on = [
-    metal_ssh_key.ssh_pub_key
+    equinix_metal_ssh_key.ssh_pub_key
   ]
   hostname                = format("%s-cp-%02d", local.stack_name, count.index + 1)
   plan                    = var.control_plane_plan
-  metro                   = var.metal_device_metro
+  metro                   = var.equinix_device_metro
   operating_system        = var.operating_system
   billing_cycle           = var.billing_cycle
-  project_id              = local.metal_project_id
+  project_id              = local.equinix_project_id
   user_data               = data.template_file.user_data.rendered
-  hardware_reservation_id = lookup(var.metal_device_reservations, format("%s-cp-%02d", local.stack_name, count.index + 1), "")
+  hardware_reservation_id = lookup(var.equinix_device_reservations, format("%s-cp-%02d", local.stack_name, count.index + 1), "")
   tags                    = concat(["app:ibm-satellite"], var.ibm_cp_host_labels)
 }
 
-resource "metal_device" "data_plane" {
+resource "equinix_metal_device" "data_plane" {
   count = var.ibm_dp_host_count
 
   depends_on = [
-    metal_ssh_key.ssh_pub_key
+    equinix_metal_ssh_key.ssh_pub_key
   ]
   hostname                = format("%s-worker-%02d", local.stack_name, count.index + 1)
   plan                    = var.data_plane_plan
-  metro                   = var.metal_device_metro
+  metro                   = var.equinix_device_metro
   operating_system        = var.operating_system
   billing_cycle           = var.billing_cycle
-  project_id              = local.metal_project_id
+  project_id              = local.equinix_project_id
   user_data               = data.template_file.user_data.rendered
-  hardware_reservation_id = lookup(var.metal_device_reservations, format("%s-cp-%02d", local.stack_name, count.index + 1), "")
+  hardware_reservation_id = lookup(var.equinix_device_reservations, format("%s-cp-%02d", local.stack_name, count.index + 1), "")
   tags                    = concat(["app:ibm-satellite"], var.ibm_dp_host_labels)
 }
 
@@ -78,7 +78,7 @@ resource "null_resource" "deploy_satellite_cluster_cp" {
     type        = "ssh"
     user        = "root"
     private_key = chomp(tls_private_key.ssh_key_pair.private_key_pem)
-    host        = metal_device.control_plane.*.access_public_ipv4[count.index]
+    host        = equinix_metal_device.control_plane.*.access_public_ipv4[count.index]
   }
 
   provisioner "remote-exec" {
@@ -115,7 +115,7 @@ resource "null_resource" "deploy_satellite_cluster_worker" {
     type        = "ssh"
     user        = "root"
     private_key = chomp(tls_private_key.ssh_key_pair.private_key_pem)
-    host        = metal_device.data_plane.*.access_public_ipv4[count.index]
+    host        = equinix_metal_device.data_plane.*.access_public_ipv4[count.index]
   }
 
   provisioner "remote-exec" {

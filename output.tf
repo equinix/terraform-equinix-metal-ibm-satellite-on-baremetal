@@ -1,10 +1,10 @@
 output "Control_Plane_public_IPs" {
-  value       = try(metal_device.control_plane.*.access_public_ipv4, "is not configured yet")
+  value       = try(equinix_metal_device.control_plane.*.access_public_ipv4, "is not configured yet")
   description = "Control Plane Public IPs"
 }
 
 output "Worker_public_IPs" {
-  value       = try(metal_device.data_plane.*.access_public_ipv4, "is not configured yet")
+  value       = try(equinix_metal_device.data_plane.*.access_public_ipv4, "is not configured yet")
   description = "Worker Node Public IPs"
 }
 
@@ -13,8 +13,8 @@ output "SSH_key_location" {
   description = "The SSH Private Key File Location"
 }
 
-output "Equinix_Metal_project_ID" {
-  value = local.metal_project_id
+output "Equinix_project_ID" {
+  value = local.equinix_project_id
   description = "The project ID used for this deployment"
 }
 

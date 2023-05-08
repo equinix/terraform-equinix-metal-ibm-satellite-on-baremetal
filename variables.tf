@@ -1,39 +1,39 @@
-variable metal_api_auth_token {
+variable equinix_api_auth_token {
   description = "Equinix Metal API Key"
   sensitive   = true
 }
 
-variable metal_create_project {
+variable equinix_create_project {
   type        = bool
   default     = true
-  description = "Create a Metal Project if this is 'true'. Else use provided 'metal_project_id'"
+  description = "Create a Metal Project if this is 'true'. Else use provided 'equinix_project_id'"
 }
 
-variable metal_project_name {
-  description = "The name of the project if 'metal_create_project' is 'true'."
+variable equinix_project_name {
+  description = "The name of the project if 'equinix_create_project' is 'true'."
   default     = "null"
 }
 
-variable metal_project_id {
+variable equinix_project_id {
   type        = string
   default     = "null"
-  description = "Equinix Metal Project ID. Required if 'metal_create_project' is 'false'"
+  description = "Equinix Metal Project ID. Required if 'equinix_create_project' is 'false'"
 }
 
-variable metal_organization_id {
+variable equinix_organization_id {
   type        = string
   default     = "null"
   description = "Equinix Metal Organization ID"
 }
 
-variable "metal_device_reservations" {
+variable "equinix_device_reservations" {
   description = <<-EOF
   A map of hostnames to reservation ids. Any hostname not defined will use the default behavior of not using a reservation.
   Mapped values may be UUIDs of the hardware reservations where you want these devices deployed,
   'next-available' if you want to pick your next available reservation automatically, or an empty string.
   Warning: Please be careful when using hardware reservation UUID and next-available together for the same pool of reservations.
   It might happen that the reservation which Equinix Metal API will pick as next-available is the reservation which you
-  refer with UUID in another metal_device resource. If that happens, and the metal_device with the UUID is created later,
+  refer with UUID in another equinix_device resource. If that happens, and the equinix_device with the UUID is created later,
   resource creation will fail because the reservation is already in use (by the resource created with next-available).
   Examples:
   - {"metal-ibm-sat-cp-01": "next-available"}
@@ -42,7 +42,7 @@ variable "metal_device_reservations" {
   type        = map(any)
   default     = {}
 }
-variable metal_device_metro {
+variable equinix_device_metro {
   description = "Equinix Metal metro location to deploy into"
   default     = "dc"
 }
