@@ -1,5 +1,5 @@
-provider "metal" {
-  auth_token = var.metal_api_auth_token
+provider "equinix" {
+  auth_token = var.equinix_api_auth_token
 }
 
 provider "ibm" {

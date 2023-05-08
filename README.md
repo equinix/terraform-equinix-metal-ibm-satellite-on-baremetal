@@ -63,10 +63,10 @@ The table below describes the variables included in the terraform.tfvars.templat
 
 |     Variable Name             |  Type   |    Default Value      | Description                                                               |
 | :---------------------------: | :-----: | :-------------------: | :------------------------------------------------------------------------ |
-|    metal_create_project       | bool    |        false          | Create a Equinix Metal Project if this is 'true'                          |
-|    metal_project_id           | string  |        n/a            | Equinix Metal Project ID. Required if 'metal_create_project' is 'false'   |
-|    metal_api_auth_token       | string  |        n/a            | Equinix Metal API Key                                                     |
-|    metal_device_metro         | string  |        "da"           | Equinix Metal metro location to deploy into. [More info](https://metal.equinix.com/developers/docs/locations/metros/#metros-quick-reference) |
+|    equinix_create_project     | bool    |        false          | Create a Equinix Metal Project if this is 'true'                          |
+|    equinix_project_id         | string  |        n/a            | Equinix Metal Project ID. Required if 'equinix_create_project' is 'false'   |
+|    equinix_api_auth_token     | string  |        n/a            | Equinix Metal API Key                                                     |
+|    equinix_device_metro       | string  |        "da"           | Equinix Metal metro location to deploy into. [More info](https://metal.equinix.com/developers/docs/locations/metros/#metros-quick-reference) |
 |    control_plane_plan         | string  |        "c3.small.x86" | Equinix Metal device type to deploy control plane nodes. [More info](https://metal.equinix.com/developers/docs/servers/server-specs/#current-generation) |
 |    data_plane_plan            | string  |        "c3.small.x86" | Equinix Metal device type to deploy data plane nodes. [More info](https://metal.equinix.com/developers/docs/servers/server-specs/#current-generation) |
 |    stack_name                 | string  |        n/a            | Equinix Metal server name prefix I.e., "ibm-satellite-equinix-metal"      |
@@ -110,7 +110,7 @@ Control_Plane_public_IPs = [
   "147.75.55.171",
   "147.75.55.211",
 ]
-Equinix_Metal_project_ID = "af5b81d0-789d-456g-9900-e3d4ec36fb04"
+Equinix_project_ID = "af5b81d0-789d-456g-9900-e3d4ec36fb04"
 SSH_key_location = "/home/ubuntu/.ssh/metal-ibm-satellite-prod-2x9hm"
 Worker_public_IPs = [
   "139.178.85.221",

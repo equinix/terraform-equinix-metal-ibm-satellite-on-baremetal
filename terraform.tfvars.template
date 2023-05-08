@@ -1,7 +1,7 @@
-metal_create_project      = false
-metal_project_id          = // (string)
-metal_api_auth_token      = // (string)
-metal_device_metro        = "da" // YOU MIGHT CHOOSE A DIFFERENT EQUINIX METAL METRO LOCATION
+equinix_create_project      = false
+equinix_project_id          = // (string)
+equinix_api_auth_token      = // (string)
+equinix_device_metro        = "da" // YOU MIGHT CHOOSE A DIFFERENT EQUINIX METAL METRO LOCATION
 control_plane_plan        = "c3.small.x86" // YOU MIGHT CHOOSE A DIFFERENT SERVER SIZE
 data_plane_plan           = "c3.small.x86" // YOU MIGHT CHOOSE A DIFFERENT SERVER SIZE
 stack_name                = // (string) EQUINIX METAL SERVER NAME PREFIX I.e.: "ibm-satellite-equinix-metal"

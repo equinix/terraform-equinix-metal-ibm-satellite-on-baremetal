@@ -1,7 +1,7 @@
 locals {
   stack_name                  = format("%s-%s", var.stack_name, random_string.cluster_suffix.result)
   ssh_key_name                = format("%s-key-%s", var.stack_name, random_string.cluster_suffix.result)
-  metal_project_id            = var.metal_create_project ? metal_project.new_project[0].id : var.metal_project_id
+  equinix_project_id            = var.equinix_create_project ? equinix_metal_project.new_project[0].id : var.equinix_project_id
   ibm_satellite_host_provider = "equinix"
 }
 
