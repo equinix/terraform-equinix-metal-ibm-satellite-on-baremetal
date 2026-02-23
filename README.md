@@ -1,5 +1,8 @@
 # Automated IBM Cloud Satellite on Equinix Metal
 
+> [!WARNING]
+> With the upcoming EoL of Equinix Metal on June 30, 2026, this repo is being archived on February 28, 2026.
+
 These files will allow you to use [Terraform](http://terraform.io) to deploy [IBM Cloud Satellite](https://cloud.ibm.com/docs/satellite?topic=satellite-getting-started) on [Equinix Metal's Bare Metal Cloud offering](http://metal.equinix.com).
 
 Default values for this initial module version will bring up 3 nodes for the IBM Satellite Control Plane cluster and 3 worker nodes to assign them to data plane clusters later. The 3 worker nodes will appear in the IBM Cloud Satellite console as not assigned to any cluster. As next steps, the user will be responsible for attach these worker nodes to a satellite enabled service. For example, [creating a Red Hat® OpenShift® on IBM Cloud™ clusters in an IBM Cloud™ Satellite location.](https://cloud.ibm.com/docs/satellite?topic=openshift-satellite-clusters) 
